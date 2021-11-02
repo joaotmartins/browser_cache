@@ -1,4 +1,4 @@
-import http, { RequestListener } from 'http';
+import { RequestListener, createServer } from 'http';
 const fs = require('fs').promises;
 
 const host : string = "localhost";
@@ -44,6 +44,6 @@ const requestListener: RequestListener = function (req, res) {
     }
 }
 
-const server = http.createServer(requestListener);
+const server = createServer(requestListener);
 
 server.listen(port, host);
