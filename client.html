@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Client for simple server</title>
+</head>
+
+<script type="application/javascript">
+    const xhr = new XMLHttpRequest();
+
+    xhr.addEventListener("load", () => {
+        const d = document.querySelector('div');
+        d.textContent = `result code: ${xhr.status}, content: ${xhr.responseText}`;
+        const etag = xhr.getResponseHeader("ETag");
+        console.log(`ETag value: ${etag}`);
+
+        const xhr2 = new XMLHttpRequest();
+        xhr2.addEventListener("load", () => {
+            const d2 = document.querySelector('#c2');
+            d2.textContent = `result code: ${xhr2.status}, content: ${xhr2.responseText}`;
+        });
+
+        xhr2.open("GET", "http://localhost:8080/regular");
+        //xhr2.setRequestHeader("If-None-Match", etag);
+        xhr2.send();
+    });
+
+    xhr.open("GET", "http://localhost:8080/regular");
+    xhr.send();
+
+    
+
+</script>
+
+<body>
+    <div id="content">
+        Content goes here
+    </div>
+
+    <div id="c2">
+        C2 goes here.
+    </div>
+</body>
